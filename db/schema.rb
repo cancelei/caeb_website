@@ -10,9 +10,49 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_01_133621) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_16_202418) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum"
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
+    t.string "slug", null: false
+    t.integer "sluggable_id", null: false
+    t.string "sluggable_type", limit: 50
+    t.string "scope"
+    t.datetime "created_at", precision: nil
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+    t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
+    t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  end
 
   create_table "spina_accounts", id: :serial, force: :cascade do |t|
     t.string "name"
@@ -42,6 +82,35 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_01_133621) do
     t.string "file"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+  end
+
+  create_table "spina_blog_categories", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["slug"], name: "index_spina_blog_categories_on_slug"
+  end
+
+  create_table "spina_blog_posts", id: :serial, force: :cascade do |t|
+    t.string "title"
+    t.text "excerpt"
+    t.text "content"
+    t.integer "image_id"
+    t.boolean "draft"
+    t.datetime "published_at", precision: nil
+    t.string "slug"
+    t.integer "user_id"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.integer "category_id"
+    t.boolean "featured", default: false
+    t.string "seo_title"
+    t.text "description"
+    t.index ["category_id"], name: "index_spina_blog_posts_on_category_id"
+    t.index ["image_id"], name: "index_spina_blog_posts_on_image_id"
+    t.index ["slug"], name: "index_spina_blog_posts_on_slug"
+    t.index ["user_id"], name: "index_spina_blog_posts_on_user_id"
   end
 
   create_table "spina_image_collections", force: :cascade do |t|
@@ -248,4 +317,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_01_133621) do
     t.datetime "password_reset_sent_at", precision: nil
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "spina_blog_posts", "spina_images", column: "image_id"
+  add_foreign_key "spina_blog_posts", "spina_users", column: "user_id"
 end
