@@ -1,43 +1,38 @@
-<h1 class="text-3xl font-bold mb-4"><%= current_page.title %></h1>
-<div class="mb-4">
-  <%= content :option %>
-</div>
+<div class="max-w-4xl mx-auto py-8">
+  <h1 class="text-4xl font-bold mb-6 text-center"><%= current_page.title %></h1>
 
-<div class="mb-4">
-  <h2 class="text-2xl font-semibold mb-2"><%= content :headline %></h2>
-  <p class="text-lg"><%= content.text :headline %></p>
-  <div class="prose">
-    <%= content.html :body %>
+  <% if content(:headline).present? %>
+    <h2 class="text-2xl font-semibold mb-4"><%= content(:headline) %></h2>
+  <% end %>
+
+  <div class="prose mb-6">
+    <%= content(:body) %>
   </div>
-</div>
 
-<% if has_content?(:image) %>
-  <div class="mb-4">
-    <%= content.image_tag :image, resize_to_fill: [100, 100] %>
+  <div class="mb-6">
+    <%= current_spina_account.content(:line) %>
   </div>
-<% end %>
 
-<div class="mb-4">
-  <%= current_spina_account.content :line %>
-</div>
+  <% if has_content?(:repeater) %>
+    <div class="space-y-4">
+      <% content(:repeater).each do |project| %>
+        <div class="bg-white p-4 rounded-lg shadow-md">
+          <div class="prose">
+            <%= project.content(:line) %>
+          </div>
+          <% if project.has_content?(:image) %>
+            <%= image_tag main_app.url_for(project.content(:image).file), class: "w-full h-full object-cover rounded-lg shadow-sm" %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 
-<% repeater current_spina_account.content(:repeater) do |repeater_content| %>
-  <div class="mb-2">
-    <%= repeater_content.content :line %>
-  </div>
-<% end %>
-
-<div class="grid grid-cols-2 gap-4 mb-4">
-  <% images :image_collection do |image| %>
-    <%= content.image_tag image, resize_to_fill: [50, 50], class: "w-12 h-12 object-cover rounded" %>
+  <% if has_content?(:image_collection) %>
+    <div class="grid grid-cols-2 gap-4 mt-6">
+      <% content(:image_collection).each do |image_part| %>
+        <%= image_tag main_app.url_for(image_part.file), class: "w-full h-full object-cover rounded-lg shadow-sm" %>
+      <% end %>
+    </div>
   <% end %>
 </div>
-
-<% repeater :repeater do |project| %>
-  <div class="mb-4">
-    <div class="prose">
-      <%= project.content.html :line %>
-    </div>
-    <%= project.content.image_tag :image, resize_to_fill: [50, 50], class: "w-12 h-12 object-cover rounded" %>
-  </div>
-<% end %>
