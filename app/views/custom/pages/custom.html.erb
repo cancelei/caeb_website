@@ -21,7 +21,8 @@
             <%= project.content(:line) %>
           </div>
           <% if project.has_content?(:image) %>
-            <%= image_tag main_app.url_for(project.content(:image).file), class: "w-full h-full object-cover rounded-lg shadow-sm" %>
+            <% image = Spina::Image.find(project.content(:image).image_id) %>
+            <%= image_tag main_app.url_for(image.file), class: "w-full h-full object-cover rounded-lg shadow-sm" %>
           <% end %>
         </div>
       <% end %>
@@ -31,7 +32,8 @@
   <% if has_content?(:image_collection) %>
     <div class="grid grid-cols-2 gap-4 mt-6">
       <% content(:image_collection).each do |image_part| %>
-        <%= image_tag main_app.url_for(image_part.file), class: "w-full h-full object-cover rounded-lg shadow-sm" %>
+        <% image = Spina::Image.find(image_part.image_id) %>
+        <%= image_tag main_app.url_for(image.file), class: "w-full h-full object-cover rounded-lg shadow-sm" %>
       <% end %>
     </div>
   <% end %>

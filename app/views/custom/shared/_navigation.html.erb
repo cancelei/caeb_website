@@ -1,2 +1,13 @@
 <% presenter = Spina::MenuPresenter.new(Spina::Page.all) %>
-<%= presenter.to_html %>
+<nav class="bg-gray-800 p-4">
+  <div class="container mx-auto flex justify-between items-center">
+    <div class="text-white text-lg font-semibold">
+      <a href="/" class="hover:text-gray-400">Home</a>
+    </div>
+    <div class="flex space-x-4">
+      <% Spina::Page.all.each do |page| %>
+        <a href="<%= page.materialized_path %>" class="text-white hover:text-gray-400"><%= page.title %></a>
+      <% end %>
+    </div>
+  </div>
+</nav>
