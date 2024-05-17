@@ -1,35 +1,43 @@
-<h1><%= current_page.title %></h1>
-<%= content :option %>
+<h1 class="text-3xl font-bold mb-4"><%= current_page.title %></h1>
+<div class="mb-4">
+  <%= content :option %>
+</div>
 
-<%= content :headline %>
-<%= content.text :headline %>
-<%= content.html :body %>
-
-<% if has_content?(:image) %>
-  <%= content.image_tag :image, resize_to_fill: [100, 100] %>
-<% end %>
-
-<%= current_spina_account.content :line %>
-
-<% repeater current_spina_account.content(:repeater) do |repeater_content| %>
-  <%= repeater_content.content :line %>
-<% end %>
-
-<% images :image_collection do |image| %>
-  <%= content.image_tag image, resize_to_fill: [50, 50] %>
-<% end %>
-
-<% repeater :repeater do |project| %>
-  <%= project.content.html :line %>
-  <%= project.content.image_tag :image, resize_to_fill: [50, 50] %>
-<% end %>
-
-<div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
-  <div class="md:flex">
-    <div class="p-8">
-      <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Test</div>
-      <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">Testing Tailwind CSS Integration</a>
-      <p class="mt-2 text-gray-500">If you can see styles applied to this text, Tailwind CSS is working!</p>
-    </div>
+<div class="mb-4">
+  <h2 class="text-2xl font-semibold mb-2"><%= content :headline %></h2>
+  <p class="text-lg"><%= content.text :headline %></p>
+  <div class="prose">
+    <%= content.html :body %>
   </div>
 </div>
+
+<% if has_content?(:image) %>
+  <div class="mb-4">
+    <%= content.image_tag :image, resize_to_fill: [100, 100] %>
+  </div>
+<% end %>
+
+<div class="mb-4">
+  <%= current_spina_account.content :line %>
+</div>
+
+<% repeater current_spina_account.content(:repeater) do |repeater_content| %>
+  <div class="mb-2">
+    <%= repeater_content.content :line %>
+  </div>
+<% end %>
+
+<div class="grid grid-cols-2 gap-4 mb-4">
+  <% images :image_collection do |image| %>
+    <%= content.image_tag image, resize_to_fill: [50, 50], class: "w-12 h-12 object-cover rounded" %>
+  <% end %>
+</div>
+
+<% repeater :repeater do |project| %>
+  <div class="mb-4">
+    <div class="prose">
+      <%= project.content.html :line %>
+    </div>
+    <%= project.content.image_tag :image, resize_to_fill: [50, 50], class: "w-12 h-12 object-cover rounded" %>
+  </div>
+<% end %>
