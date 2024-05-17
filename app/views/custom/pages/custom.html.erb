@@ -6,11 +6,11 @@
   <% end %>
 
   <div class="prose mb-6">
-    <%= content(:body) %>
+    <%= raw content(:body) %>
   </div>
 
-  <div class="mb-6">
-    <%= current_spina_account.content(:line) %>
+  <div class="mb-6 prose">
+    <%= raw current_spina_account.content(:line) %>
   </div>
 
   <% if has_content?(:repeater) %>
@@ -18,7 +18,7 @@
       <% content(:repeater).each do |project| %>
         <div class="bg-white p-4 rounded-lg shadow-md">
           <div class="prose">
-            <%= project.content(:line) %>
+            <%= raw project.content(:line) %>
           </div>
           <% if project.has_content?(:image) %>
             <% image = Spina::Image.find(project.content(:image).image_id) %>
