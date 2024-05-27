@@ -1,24 +1,11 @@
-# README
+After running `bundle install`
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Run the `rails spina:install`
 
-Things you may want to cover:
+If needed run `rails active_storage:install`, then repeat the last 2 commands.
 
-* Ruby version
+To install the blog module:
 
-* System dependencies
+https://github.com/SpinaCMS/spina-blog
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+After `bundle` do `rails g spina_blog:install`
