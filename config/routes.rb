@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   mount Spina::Engine => '/'
 
   Spina::Engine.routes.draw do
