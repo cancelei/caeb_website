@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
-  mount Spina::Engine => '/'
 
+  devise_scope :user do
+    get 'users/sign_out', to: 'devise/sessions#destroy'
+    end
+
+  mount Spina::Engine => '/'
   Spina::Engine.routes.draw do
     resources :blog_posts, only: [:index, :show], as: 'spina_blog_posts'
   end
