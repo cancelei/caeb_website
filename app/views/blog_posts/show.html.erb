@@ -1,2 +1,4 @@
-<h1><%= @blog_post.title %></h1>
-<p><%= @blog_post.content %></p>
+<h1 class="text-4xl font-bold mb-6"><%= @blog_post.title %></h1>
+<div class="prose lg:prose-xl">
+  <%= @blog_post.content.html_safe %>
+</div>

@@ -8,6 +8,13 @@
       <% Spina::Page.all.each do |page| %>
         <a href="<%= page.materialized_path %>" class="text-white hover:text-gray-400"><%= page.title %></a>
       <% end %>
+      <% if user_signed_in? %>
+        <%= link_to 'Logout', main_app.destroy_user_session_path, method: :delete, class: 'text-white hover:text-gray-400' %>
+      <% else %>
+        <%= link_to 'Login', main_app.new_user_session_path, class: 'text-white hover:text-gray-400' %>
+        <%= link_to 'Sign Up', main_app.new_user_registration_path, class: 'text-white hover:text-gray-400' %>
+      <% end %>
     </div>
   </div>
 </nav>
+
