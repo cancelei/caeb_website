@@ -6,12 +6,8 @@
     </div>
     <div class="flex space-x-4">
       <% if user_signed_in? %>
-        <a href="/dashboard" class="text-white hover:text-gray-400">Dashboard</a>
-        <a href="/profile" class="text-white hover:text-gray-400">Profile</a>
         <%= link_to 'Logout', main_app.destroy_user_session_path, method: :delete, class: 'text-white hover:text-gray-400' %>
       <% else %>
-        <a href="/about" class="text-white hover:text-gray-400">About</a>
-        <a href="/contact" class="text-white hover:text-gray-400">Contact</a>
         <%= link_to 'Login', main_app.new_user_session_path, class: 'text-white hover:text-gray-400' %>
         <%= link_to 'Sign Up', main_app.new_user_registration_path, class: 'text-white hover:text-gray-400' %>
       <% end %>
